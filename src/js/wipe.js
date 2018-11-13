@@ -4,7 +4,21 @@ var x1 = 0;
 var y1 =0;
 var c= 0;
 var radius = 20;//涂抹的半径
+var phone1 = "";
+var phone2 = "";
+var phone3 = "";
 var isMouseDown = false;//表示鼠标的状态,是否按下,默认为未按下;
+var device = (/android|webos|iPhone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+console.log(device);
+if (device){
+	phone1 = "touchstart";
+	phone2 = "touchmove";
+	phone3 = "touchend";
+}else{
+	phone1 = "mousedown";
+	phone2 = "mousemove";
+	phone3 = "mouseup";
+}
 function drawMask(context){
 	context.fillStyle = "#666";
 	context.fillRect(0,0,cas.width,cas.height);
@@ -30,36 +44,76 @@ function drawLine(context,x1,y1,x2,y2){
 		context.restore();
 }
 //在canvas画布上监听自定义事件"mousedown",调用drawPoint函数
-cas.addEventListener("mousedown",function(evt){
+cas.addEventListener(phone1,function(evt){
 	isMouseDown = true;
-	console.log(isMouseDown);
-	var event = evt || window.event;
-	x1 = event.clientX;
-	y1 = event.clientY;
-	drawcav(context,event.clientX,event.clientY);
+	if (device) {
+		x1 = event.touches[0].clientX;
+		y1 = event.touches[0].clientY;
+	}else{
+		x1 = event.clientX;
+		y1 = event.clientY;
+	}
+	drawcav(context,x1,y1);
 },false);
-cas.addEventListener("mousemove",fn1,false);
-function fn1(evt){
-	if (isMouseDown) {
+//手机端触摸事件
+// cas.addEventListener("touchstart",function(evt){
+// 	isMouseDown = true;
+// 	var event = evt || window.event;
+// 	x1 = event.touches[0].clientX;
+// 	y1 = event.touches[0].clientY;
+// 	drawcav(context,x1,y1);
+// });
+//手机端移动事件
+cas.addEventListener(phone2,fn2,false);
+function fn2(evt){
+	if (isMouseDown){
 		var event = evt || window.event;
-		var x2 = event.clientX;
-		var y2 = event.clientY;
+		event.preventDefault();
+		if (device){
+			var x2 = event.touches[0].clientX;
+			var y2 = event.touches[0].clientY;
+		}else{
+			var x2 = event.clientX;
+			var y2 = event.clientY;
+		}
 		drawLine(context,x1,y1,x2,y2);
 		x1 = x2;
 		y1 = y2;
 	}
 }
-cas.addEventListener("mouseup",function(){
+//PC端移动事件
+// cas.addEventListener(phone3,fn1,false);
+// function fn1(evt){
+// 	if (isMouseDown) {
+// 		var event = evt || window.event;
+// 		var x2 = event.clientX;
+// 		var y2 = event.c0lientY;
+// 		drawLine(context,x1,y1,x2,y2);
+// 		x1 = x2;
+// 		y1 = y2;
+// 	}
+// }
+//PC端移动结束时间
+cas.addEventListener(phone3,function(){
 	isMouseDown = false;
 	if (getTranspar(context) > 65) {
 		clearRect(context);
 	}
 	console.log(isMouseDown);
 },false);
-
+//手机端手指移开
+// cas.addEventListener("touchend",function(){
+// 	isMouseDown = false;
+// 	if (getTranspar(context) > 65) {
+// 		clearRect(context);
+// 	}
+// 	console.log(isMouseDown);
+// },false);
+//调用画圆代码
 function clearRect(context){
 	context.clearRect(0,0,cas.width,cas.height);
 }
+//计算透明度
 function getTranspar(context){
 		var a = context.getImageData(0,0,cas.width,cas.height);
 		console.log(a);
