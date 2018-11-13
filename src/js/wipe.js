@@ -43,7 +43,7 @@ function drawMask(context){
 // 		//恢复原有绘图状态
 // 		context.restore();
 // }
-//画线画圆两用
+//函数合并优化
 function draw(context,x1,y1,x2,y2){
 	if (arguments.length===3) {
 		context.beginPath();
@@ -70,7 +70,7 @@ cas.addEventListener(phone1,function(evt){
 		y1 = event.touches[0].clientY;
 	}else{
 		x1 = event.clientX;
-		y1 = event.clientY;
+		y1 = event.clietY;
 	}
 	draw(context,x1,y1);
 },false);
@@ -88,13 +88,8 @@ function fn2(evt){
 	if (isMouseDown){
 		var event = evt || window.event;
 		event.preventDefault();
-		if (device){
-			var x2 = event.touches[0].clientX;
-			var y2 = event.touches[0].clientY;
-		}else{
-			var x2 = event.clientX;
-			var y2 = event.clientY;
-		}
+		var x2 = device?event.touches[0].clientX:event.clientX;
+		var y2 = device?event.touches[0].clientY:event.clientY;
 		draw(context,x1,y1,x2,y2);
 		x1 = x2;
 		y1 = y2;
