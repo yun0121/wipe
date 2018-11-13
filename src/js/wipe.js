@@ -25,14 +25,32 @@ function drawMask(context){
 	context.globalCompositeOperation = "destination-out";
 }
 //在画布上画一个半径为30的圆
-function drawcav(context,moveX,moveY){
-	context.beginPath();
-	context.arc(moveX,moveY,radius,0,2*Math.PI);
-	context.fillStyle = "red";
-	context.fill();
-}
-//画直线
-function drawLine(context,x1,y1,x2,y2){
+// function drawcav(context,moveX,moveY){
+// 	context.beginPath();
+// 	context.arc(moveX,moveY,radius,0,2*Math.PI);
+// 	context.fillStyle = "red";
+// 	context.fill();
+// }
+// //画直线
+// function drawLine(context,x1,y1,x2,y2){
+// 		context.save();
+// 		context.beginPath();
+// 		context.lineCap = "round";
+// 		context.lineWidth = radius*2;
+// 		context.moveTo(x1,y1);
+// 		context.lineTo(x2,y2);
+// 		context.stroke();
+// 		//恢复原有绘图状态
+// 		context.restore();
+// }
+//画线画圆两用
+function draw(context,x1,y1,x2,y2){
+	if (arguments.length===3) {
+		context.beginPath();
+		context.arc(x1,y1,radius,0,2*Math.PI);
+		context.fillStyle = "red";
+		context.fill();
+	}else{
 		context.save();
 		context.beginPath();
 		context.lineCap = "round";
@@ -42,6 +60,7 @@ function drawLine(context,x1,y1,x2,y2){
 		context.stroke();
 		//恢复原有绘图状态
 		context.restore();
+	}
 }
 //在canvas画布上监听自定义事件"mousedown",调用drawPoint函数
 cas.addEventListener(phone1,function(evt){
@@ -53,7 +72,7 @@ cas.addEventListener(phone1,function(evt){
 		x1 = event.clientX;
 		y1 = event.clientY;
 	}
-	drawcav(context,x1,y1);
+	draw(context,x1,y1);
 },false);
 //手机端触摸事件
 // cas.addEventListener("touchstart",function(evt){
@@ -76,7 +95,7 @@ function fn2(evt){
 			var x2 = event.clientX;
 			var y2 = event.clientY;
 		}
-		drawLine(context,x1,y1,x2,y2);
+		draw(context,x1,y1,x2,y2);
 		x1 = x2;
 		y1 = y2;
 	}
