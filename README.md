@@ -11,7 +11,8 @@ PC端实现涂抹效果,超过50%的涂抹面积可以全部显示。涂抹颜�
 
 使用步骤说明:
 1.在HTML中添加一个指定的canvas标签
-例如:<canvas id="cas"></canvas>
+例如:
+` <canvas id="cas"></canvas> `
 2.编译配置文件
 |属性名 |取值类型|备注|
 |id |字符串|canvas标签的id|
