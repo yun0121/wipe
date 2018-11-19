@@ -1,6 +1,6 @@
 {
   "name": "wipe-hog",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "devDependenciees": {},
   "devDependencies": {
     "grunt": "^1.0.3",
