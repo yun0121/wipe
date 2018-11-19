@@ -14,15 +14,41 @@
 			margin:0;
 			padding:0;
 		}
-		#cas{
+		/*#cas{
 			border:1px solid #000;
 			background:url(image/wipe1.jpg) center 0 no-repeat;
-			background-size: cover;
+			background-size: 100% 100%;
+		}*/
+		div{
+			position: relative;
+			left: 50px;
+			top: 50px;
 		}
 	</style>
 </head>
 <body>
-	<canvas id="cas" width="375" height="667"></canvas>
+	<canvas id="cas"></canvas>
 </body>
 </html>
 <script src="js/wipe.js"></script>
+<script>
+	var wipeConfig = {
+		id:"cas", 			//id
+		coverType:"color",  //取值类型color,image,如果没有值,则画布覆盖色默认为灰色
+		color:"red",  		    //颜色参数
+		imgUrl:"image/wipe2.jpg",		    //覆盖图片
+		backImgUrl:"image/wipe1.jpg",	    //背景图片
+		width:400, 		    //canvas宽
+		height:600,         //canvas高
+		radius:10,           //画笔的半径
+		percents:50,		 //透明度占整个画布的百分比,超出此数字显示全部画布
+		wipeCallback:wipeCallback //配置的回调函数名称
+	}
+	var cas01 = new Wipe(wipeConfig);
+	console.log(cas01);
+	function wipeCallback(percent){
+		if (percent > 50) {
+			console.log("透明面积超过50%,查看底图");
+		}
+	}
+</script>
