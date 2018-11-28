@@ -99,6 +99,9 @@ this.press = this.device ? "touchstart" : "mousedown";
 this.move = this.device ? "touchmove" : "mousemove";
 this.loosen = this.device ? "touchend" : "mouseup";
 var that = this;
+setTimeout(function(){
+		that.getTranspar();
+	},500);
 //在canvas画布上监听自定义事件"mousedown",调用drawPoint函数
 this.cas.addEventListener(this.press,function(evt){
 	that.isMouseDown = true;
