@@ -54,4 +54,7 @@ function wipeCallback(percent){
 		}
 	}
  ```
+## ver 3.0.1 ##
+添加透明度延迟检测
+
 
